@@ -1,0 +1,47 @@
+1. What "git" command creates a branch?
+	git checkout -b "new_branch";
+
+2. What is the difference between a fast-forward and recursive merge?	
+	Fast forward merge is when there is a linear path between the branch to merge and the current branch. All the commits from the selected branch to be merged will be added to the current branch.
+ 	A recursive merge is when there are commits that have been made to both selected merged branches which conflict with each other. This requires manual input from the user attempting the merge, to select which commits will be preserved and discarded when there are conflicts. Further changes cannot be made to the repository until the conflicts are resolved.
+	
+3. What "git" command changes to another branch?
+	git checkout "Branch Name";
+	with -b flag will create a new branch.
+
+4. What "git" command deletes a branch?
+	git branch -d "Branch Name";
+	The -D flag will force remove.
+
+5. How do merge conflicts happen?
+	Merge conflicts occur when there are commits that have been made to both selected merged branches which conflict with each other. For example, on both branches to be merged, commits are made to the same file, the changes must be resolved manually.
+
+Part II
+1. Practice with fast forward and recursive merges! Make a branch and add and commit onto it and merge it back into master.
+	git init MergeTests;
+	cd MergeTests;
+	git branch -m master main; //if master is used instead of main
+	echo "initial" > first.txt;
+	git add first.txt;
+	git commit -m "Add first.txt";
+	git checkout -b fastforward;
+	echo "fastforwardmodified" > first.txt;
+	git add first.txt;
+	git commit -m "modified first.txt for fast forward merges";
+	git checkout main;
+	git merge fastforward;
+	git branch -d fastforward;	
+	
+2. Try to create your own merge conflict by modifying the same file on two separate commits on two separate branches.
+	git checkout -b recursivemerge;
+	echo "recursivemergemodified" > first.txt;
+	git add first.txt;
+	git commit -m "Recursive merge requirement 1 modified first.txt"
+	git checkout main;
+	echo "conflictingmerge" > first.txt;
+	git add first.txt;
+	git commit -m "Conflicting/Recursive merge requirement 2 modified first.txt"
+	git merge recursivemerge;
+	echo "merge conflict resolved by resolving both modifications of first.txt" > first.txt;
+	git add first.txt;
+	git commit -m "resolved merge conflict"
